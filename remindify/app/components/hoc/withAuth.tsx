@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/api/utils/utils";
 
-export function withAuth<P extends JSX.IntrinsicAttributes>(
+function withAuth<P extends JSX.IntrinsicAttributes>(
     WrappedComponent: ComponentType<P>
 ) {
     // The returned component is async because we await the session.
