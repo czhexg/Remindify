@@ -22,7 +22,7 @@ export async function POST(req: Request) {
             );
         }
 
-        let response = NextResponse.json(
+        const response = NextResponse.json(
             {
                 user: data.user,
             },
@@ -39,6 +39,8 @@ export async function POST(req: Request) {
 
         return response;
     } catch (err) {
+        console.error(err);
+
         return NextResponse.json(
             { error: "Internal Server Error" },
             { status: 500 }

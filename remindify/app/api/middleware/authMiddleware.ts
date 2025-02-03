@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Middleware } from "./handler";
-import { supabase } from "@/api/utils/createClient";
 import {
     refreshAccessToken,
     setAuthCookies,

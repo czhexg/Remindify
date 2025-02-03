@@ -11,14 +11,9 @@ import {
     MenuItem,
     Grid2 as Grid,
     Button,
-    Accordion,
-    AccordionSummary,
-    Typography,
-    AccordionDetails,
     Checkbox,
     FormControlLabel,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";

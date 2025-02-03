@@ -45,6 +45,7 @@ export default function LoginPage() {
             // Redirect to the dashboard
             router.push("/");
         } catch (err) {
+            console.error(err);
             setError("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
@@ -108,7 +109,7 @@ export default function LoginPage() {
                     )}
                 </Button>
                 <Typography variant="body2" align="center">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link
                         href="/auth/register"
                         style={{ textDecoration: "none", color: "#1976d2" }}

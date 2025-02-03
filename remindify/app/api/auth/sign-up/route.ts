@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "../../utils/createClient";
-import { setAuthCookies } from "@/api/utils/utils";
+// import { setAuthCookies } from "@/api/utils/utils";
 
 export const runtime = "edge";
 
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
             );
         }
 
-        let response = NextResponse.json(
+        const response = NextResponse.json(
             {
                 user: data.user,
             },
@@ -37,6 +37,8 @@ export async function POST(req: Request) {
 
         return response;
     } catch (err) {
+        console.error(err);
+
         return NextResponse.json(
             { error: "Internal Server Error" },
             { status: 500 }

@@ -6,7 +6,7 @@ import { Controller, handler } from "../middleware/handler";
 
 export const runtime = "edge";
 
-const getAllCategories: Controller = async (request: NextRequest) => {
+const getAllCategories: Controller = async () => {
     try {
         // Fetch categories from the database
         const { data: categories, error } = await supabase

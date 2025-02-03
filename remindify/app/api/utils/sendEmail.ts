@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import { getDueNotificationsUtil } from "./notificationUtils";
-import { DueNotification } from "../types";
 
 /**
  * Sends an email notification.

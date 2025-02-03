@@ -48,6 +48,7 @@ export default function RegisterPage() {
             // redirect the user to the login page after successful registration
             router.push("/auth/login");
         } catch (err) {
+            console.error(err);
             setError("Something went wrong. Please try again.");
         } finally {
             setLoading(false);
