@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Grid2 as Grid, Card, CardContent } from "@mui/material";
-import withAuth from "./components/hoc/withAuth";
+import { withAuth } from "./components/hoc/withAuth";
 
 function Dashboard() {
     const events = [
