@@ -1,13 +1,11 @@
-import { ComponentType, JSX } from "react";
+import { ComponentType, FC, JSX } from "react";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { verifyAccessToken } from "@/api/utils/utils";
 
-export function withAuth<P extends JSX.IntrinsicAttributes>(
-    WrappedComponent: ComponentType<P>
-) {
+function withAuth<P = object>(WrappedComponent: ComponentType<P>) {
     // The returned component is async because we await the session.
-    const ComponentWithAuth = async (props: P) => {
+    const ComponentWithAuth: FC<P> = async (props: P) => {
         // Retrieve the cookie store
         const cookieStore = cookies();
 
@@ -67,8 +65,10 @@ export function withAuth<P extends JSX.IntrinsicAttributes>(
             }
         }
 
-        return <WrappedComponent {...props} />;
+        return <WrappedComponent {...(props as React.PropsWithChildren<P>)} />;
     };
 
     return ComponentWithAuth;
 }
+
+export default withAuth;
