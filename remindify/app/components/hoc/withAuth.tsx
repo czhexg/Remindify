@@ -28,7 +28,7 @@ function withAuth<P = object>(WrappedComponent: ComponentType<P>) {
 
             // prettier-ignore
             // Call api to refresh the token.
-            const response = await fetch("http://localhost:3000/api/auth/refresh", {
+            const response = await fetch(`${process.env.BASE_URL}/api/auth/refresh`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

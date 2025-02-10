@@ -60,7 +60,7 @@ export default function CreateEventForm(props: { handleClose?: () => void }) {
         async function fetchCategories(): Promise<void> {
             try {
                 const response = await fetch(
-                    "http://localhost:3000/api/categories"
+                    `${process.env.BASE_URL}/api/categories`
                 );
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

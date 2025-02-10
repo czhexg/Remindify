@@ -17,7 +17,7 @@ import { cookies } from "next/headers";
 
 async function EventsPage() {
     const cookieStore = await cookies();
-    const eventsData = await fetch("http://localhost:3000/api/events", {
+    const eventsData = await fetch(`${process.env.BASE_URL}/api/events`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
