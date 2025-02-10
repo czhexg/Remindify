@@ -12,17 +12,35 @@ import Link from "next/link";
 
 import CreateEventModal from "@/components/createEventModal";
 import withAuth from "@/components/hoc/withAuth";
+import { Event } from "@/api/types";
+import { cookies } from "next/headers";
 
-function EventsPage() {
-    const events = [
-        { id: 1, name: "Meeting", date: "2024-01-10", category: "Work" },
-        {
-            id: 2,
-            name: "Birthday Party",
-            date: "2024-01-15",
-            category: "Personal",
+async function EventsPage() {
+    const cookieStore = await cookies();
+    const eventsData = await fetch("http://localhost:3000/api/events", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
         },
-    ];
+        credentials: "include", // Ensures cookies are sent with the request
+        cache: "no-store",
+    });
+
+    const events: Event[] = await eventsData.json();
+
+    const convertDate = (date: string) => {
+        // Parse the date string
+        const dateObj = new Date(date);
+
+        // Format the date as DD-MM-YYYY
+        const formattedDate = dateObj.toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+        return formattedDate;
+    };
 
     return (
         <div>
@@ -43,8 +61,10 @@ function EventsPage() {
                     {events.map((event) => (
                         <TableRow key={event.id}>
                             <TableCell>{event.name}</TableCell>
-                            <TableCell>{event.date}</TableCell>
-                            <TableCell>{event.category}</TableCell>
+                            <TableCell>
+                                {convertDate(event.start_date)}
+                            </TableCell>
+                            <TableCell>{event.category.name}</TableCell>
                             <TableCell>
                                 <Button
                                     variant="outlined"
