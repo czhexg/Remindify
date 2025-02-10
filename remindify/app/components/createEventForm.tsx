@@ -23,6 +23,7 @@ import {
     NotificationData,
     RecurrenceData,
 } from "@/api/types";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
     eventData: EventData;
@@ -30,7 +31,9 @@ type FormValues = {
     notificationData: NotificationData;
 };
 
-export default function CreateEventForm(props: { handleClose: () => void }) {
+export default function CreateEventForm(props: { handleClose?: () => void }) {
+    console.log("CreateEventForm");
+
     const [categories, setCategories] = useState<Category[]>([]);
     const [formValues, setFormValues] = useState<FormValues>({
         eventData: {
@@ -50,12 +53,15 @@ export default function CreateEventForm(props: { handleClose: () => void }) {
         },
     });
     const [toNotify, setToNotify] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         // Fetch categories from API
         async function fetchCategories(): Promise<void> {
             try {
-                const response = await fetch("api/categories");
+                const response = await fetch(
+                    "http://localhost:3000/api/categories"
+                );
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -187,30 +193,11 @@ export default function CreateEventForm(props: { handleClose: () => void }) {
         }
         console.log("Event created successfully!");
         // Close the modal
-        props.handleClose();
+        props.handleClose ? props.handleClose() : router.push("/events");
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            {/* <Accordion defaultExpanded>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1-content"
-                    id="panel1-header"
-                >
-                    <Typography component="span">
-                        Expanded by default
-                    </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Suspendisse malesuada lacus ex, sit amet blandit leo
-                        lobortis eget.
-                    </Typography>
-                </AccordionDetails>
-            </Accordion> */}
-            {/* Event Name */}
             <TextField
                 label="Event Name"
                 name="name"
@@ -377,7 +364,16 @@ export default function CreateEventForm(props: { handleClose: () => void }) {
                 sx={{ mt: 2 }}
             >
                 <Grid>
-                    <Button onClick={props.handleClose} color="secondary">
+                    <Button
+                        onClick={() => {
+                            if (props.handleClose) {
+                                props.handleClose();
+                            } else {
+                                router.push("/events");
+                            }
+                        }}
+                        color="secondary"
+                    >
                         Cancel
                     </Button>
                 </Grid>
