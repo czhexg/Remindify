@@ -3,7 +3,7 @@ import { sendDueNotifications } from "../utils/sendEmail";
 
 export const runtime = "nodejs";
 
-export async function POST() {
+export async function GET() {
     try {
         await sendDueNotifications();
 
