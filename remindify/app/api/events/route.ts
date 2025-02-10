@@ -22,7 +22,9 @@ const getAllEvents: Controller = async (request: Request) => {
         // Fetch events from the database filtered by user_id
         const { data: events, error } = await supabase
             .from("events")
-            .select("*, recurrence (*), notifications (*)")
+            .select(
+                "*, recurrence (*), notifications (*), category: category_id(*)"
+            )
             .eq("user_id", userId);
 
         if (error) {
