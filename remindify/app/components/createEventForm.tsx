@@ -193,7 +193,11 @@ export default function CreateEventForm(props: { handleClose?: () => void }) {
         }
         console.log("Event created successfully!");
         // Close the modal
-        props.handleClose ? props.handleClose() : router.push("/events");
+        if (props.handleClose) {
+            props.handleClose();
+        } else {
+            router.push("/events");
+        }
     };
 
     return (
