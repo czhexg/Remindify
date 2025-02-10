@@ -14,7 +14,7 @@ export default function Navbar() {
                             color: "white",
                         }}
                     >
-                        Event Manager
+                        Remindify
                     </Link>
                 </Typography>
                 <Link
@@ -27,7 +27,7 @@ export default function Navbar() {
                 >
                     Events
                 </Link>
-                <Link
+                {/* <Link
                     href="/notifications"
                     style={{
                         textDecoration: "none",
@@ -36,7 +36,7 @@ export default function Navbar() {
                     }}
                 >
                     Notifications
-                </Link>
+                </Link> */}
                 <Link
                     href="/settings"
                     style={{

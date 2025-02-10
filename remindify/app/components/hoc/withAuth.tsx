@@ -28,7 +28,7 @@ function withAuth<P = object>(WrappedComponent: ComponentType<P>) {
 
             // prettier-ignore
             // Call api to refresh the token.
-            const response = await fetch("/api/auth/refresh", {
+            const response = await fetch("http://localhost:3000/api/auth/refresh", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,9 +36,7 @@ function withAuth<P = object>(WrappedComponent: ComponentType<P>) {
             });
 
             if (!response.ok) {
-                console.error(
-                    "Failed to refresh token. Redirecting to login..."
-                );
+                console.log("Failed to refresh token. Redirecting to login...");
                 redirect("/auth/login");
             }
 
