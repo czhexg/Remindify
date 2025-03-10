@@ -41,6 +41,7 @@ export type DueNotification = Notification & {
             id: string;
             email: string;
         };
+        recurrence: Recurrence;
     };
 };
 

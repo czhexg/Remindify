@@ -97,7 +97,7 @@ export async function getDueNotificationsUtil(): Promise<DueNotification[]> {
     const { data: notifications, error } = await supabase
         .from("notifications")
         .select(
-            "*, event: event_id(*, category: category_id(*), user: user_id(*))"
+            "*, event: event_id(*, category: category_id(*), user: user_id(*), recurrence: recurrence(*))"
         )
         .gte("reminder_date", todayStart.toISOString()) // Greater than or equal to the start of today
         .lte("reminder_date", todayEnd.toISOString()) // Less than or equal to the end of today

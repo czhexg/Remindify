@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendDueNotifications } from "../utils/sendEmail";
+import { getDueNotificationsUtil } from "../utils/notificationUtils";
 
 export const runtime = "nodejs";
 

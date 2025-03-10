@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer";
-import { getDueNotificationsUtil } from "./notificationUtils";
+import {
+    getDueNotificationsUtil,
+    updateNotificationUtil,
+} from "./notificationUtils";
 
 /**
  * Sends an email notification.
@@ -56,8 +59,9 @@ export async function sendDueNotifications(): Promise<void> {
     for (const notification of notifications) {
         console.log("Sending notification:", notification);
 
-        const { channel, message, reminder_date, event } = notification;
+        const { id, channel, message, reminder_date, event } = notification;
         const userEmail = event.user.email;
+        const frequency = event.recurrence.frequency;
 
         // Write a custom message for the notification if message is not provided
         let newMessage = "";
@@ -68,12 +72,42 @@ export async function sendDueNotifications(): Promise<void> {
         }
 
         if (channel === "email") {
-            await sendEmailNotification(
+            sendEmailNotification(
                 userEmail,
                 `Reminder for ${event.category.name} event "${event.name}" on ${reminder_date}`,
                 newMessage
             );
         }
+
+        let newReminderDate = new Date(reminder_date);
+        if (frequency === "once") {
+            continue;
+        } else if (frequency === "daily") {
+            newReminderDate.setDate(newReminderDate.getDate() + 1);
+        } else if (frequency === "weekly") {
+            newReminderDate.setDate(newReminderDate.getDate() + 7);
+        } else if (frequency === "monthly") {
+            const targetDay = newReminderDate.getDate();
+            newReminderDate.setMonth(newReminderDate.getMonth() + 1);
+
+            // If the day has shifted (e.g., Jan 30 → Mar 1), adjust to the last valid day of the month
+            if (newReminderDate.getDate() !== targetDay) {
+                newReminderDate.setDate(0); // Moves to the last day of the previous month
+            }
+        } else if (frequency === "yearly") {
+            const targetDay = newReminderDate.getDate();
+            newReminderDate.setFullYear(newReminderDate.getFullYear() + 1);
+
+            if (newReminderDate.getDate() !== targetDay) {
+                newReminderDate.setDate(0); // Moves to the last day of the previous month
+            }
+        }
+
+        await updateNotificationUtil({
+            notification_id: id,
+            reminder_date: newReminderDate,
+            channel: channel,
+        });
     }
 
     console.log("Sent due notifications");
