@@ -79,7 +79,7 @@ export async function sendDueNotifications(): Promise<void> {
             );
         }
 
-        let newReminderDate = new Date(reminder_date);
+        const newReminderDate = new Date(reminder_date);
         if (frequency === "once") {
             continue;
         } else if (frequency === "daily") {
