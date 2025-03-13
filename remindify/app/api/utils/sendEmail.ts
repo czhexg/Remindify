@@ -72,7 +72,7 @@ export async function sendDueNotifications(): Promise<void> {
         }
 
         if (channel === "email") {
-            sendEmailNotification(
+            await sendEmailNotification(
                 userEmail,
                 `Reminder for ${event.category.name} event "${event.name}" on ${reminder_date}`,
                 newMessage
